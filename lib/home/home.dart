@@ -1,3 +1,4 @@
+import 'package:flitro/template_selector/template_selector.dart';
 import 'package:flitro/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -143,6 +144,12 @@ class BeginButton extends StatelessWidget {
               fontFamily: 'cocogoose', color: MyColors.white, fontSize: 20),
         ),
       ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TemplateSelector()),
+        );
+      },
     );
   }
 }
