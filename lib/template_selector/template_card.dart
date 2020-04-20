@@ -1,4 +1,4 @@
-import 'package:flitro/templates/face_paint_template.dart';
+import 'package:flitro/templates/face_paint_template/face_paint_template.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
