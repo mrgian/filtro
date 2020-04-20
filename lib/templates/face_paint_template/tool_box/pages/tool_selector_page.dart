@@ -23,7 +23,9 @@ class ToolSelectorPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ToolButton(icon: Icons.brush, onTap: () => changeTool(BrushPage())),
+            ToolButton(
+                icon: Icons.brush,
+                onTap: () => changeTool(BrushPage(changeTool))),
             ToolButton(icon: Icons.text_fields, onTap: null),
           ],
         )

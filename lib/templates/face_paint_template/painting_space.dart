@@ -8,11 +8,7 @@ class PaintingSpace extends StatefulWidget {
 }
 
 class _PaintingSpaceState extends State<PaintingSpace> {
-  List<Offset> points = <Offset>[];
-  Color color = Colors.black;
-  StrokeCap strokeCap = StrokeCap.round;
-  double strokeWidth = 5.0;
-  List<Painter> painters = <Painter>[];
+  List<PaintPoint> points = <PaintPoint>[];
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +21,20 @@ class _PaintingSpaceState extends State<PaintingSpace> {
             RenderBox object = context.findRenderObject();
             Offset localPosition = object.globalToLocal(details.globalPosition);
             points = new List.from(points);
-            points.add(localPosition);
+
+            Paint paint = new Paint()
+              ..color = BrushValues.color
+              ..strokeCap = StrokeCap.round
+              ..strokeWidth = BrushValues.thickness;
+
+            points.add(new PaintPoint(localPosition, paint));
           });
         },
         onPanEnd: (DragEndDetails details) => points.add(null),
         child: CustomPaint(
           painter: Painter(
-              points: points,
-              color: color,
-              strokeCap: strokeCap,
-              strokeWidth: strokeWidth,
-              painters: painters),
+            points: points,
+          ),
           size: Size.infinite,
         ),
       ),
@@ -44,40 +43,36 @@ class _PaintingSpaceState extends State<PaintingSpace> {
 }
 
 class Painter extends CustomPainter {
-  List<Offset> points;
-  Color color;
-  StrokeCap strokeCap;
-  double strokeWidth;
-  List<Painter> painters;
+  List<PaintPoint> points;
 
-  Painter(
-      {this.points,
-      this.color,
-      this.strokeCap,
-      this.strokeWidth,
-      this.painters = const []});
+  Painter({this.points});
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (Painter painter in painters) {
-      painter.paint(canvas, size);
-    }
-
-    Paint paint = new Paint();
-    paint.color = color;
-    paint.strokeCap = strokeCap;
-    paint.strokeWidth = strokeWidth;
     for (int i = 0; i < points.length - 1; i++) {
       if (points[i] != null && points[i + 1] != null) {
-        if (points[i].dx < 400 &&
-            points[i].dy < 400 &&
-            points[i + 1].dx < 400 &&
-            points[i + 1].dy < 400)
-          canvas.drawLine(points[i], points[i + 1], paint);
+        if (points[i].offset.dx < 400 &&
+            points[i].offset.dy < 400 &&
+            points[i + 1].offset.dx < 400 &&
+            points[i + 1].offset.dy < 400)
+          canvas.drawLine(
+              points[i].offset, points[i + 1].offset, points[i].paint);
       }
     }
   }
 
   @override
   bool shouldRepaint(Painter oldPainter) => oldPainter.points != points;
+}
+
+class PaintPoint {
+  Offset offset;
+  Paint paint;
+
+  PaintPoint(this.offset, this.paint);
+}
+
+class BrushValues {
+  static double thickness = 10.0;
+  static Color color = Colors.black;
 }
