@@ -14,7 +14,7 @@ class ToolSelectorPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.only(bottom: 32),
           child: Text(
             'Select a tool',
             style: TextStyle(fontFamily: 'cocogoose', fontSize: 20),
@@ -28,7 +28,24 @@ class ToolSelectorPage extends StatelessWidget {
                 onTap: () => changeTool(BrushPage(changeTool))),
             ToolButton(icon: Icons.text_fields, onTap: null),
           ],
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 48),
+          child: Container(
+            decoration: BoxDecoration(
+                color: MyColors.black, borderRadius: BorderRadius.circular(15)),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'Next',
+                style: TextStyle(
+                    fontFamily: 'cocogoose',
+                    fontSize: 15,
+                    color: MyColors.white),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
