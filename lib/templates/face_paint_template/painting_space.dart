@@ -1,3 +1,4 @@
+import 'package:flitro/templates/face_paint_template/tool_box/pages/tool_selector_page.dart';
 import 'package:flutter/material.dart';
 
 class PaintingSpace extends StatefulWidget {
@@ -17,18 +18,21 @@ class _PaintingSpaceState extends State<PaintingSpace> {
       height: 400,
       child: GestureDetector(
         onPanUpdate: (DragUpdateDetails details) {
-          setState(() {
-            RenderBox object = context.findRenderObject();
-            Offset localPosition = object.globalToLocal(details.globalPosition);
-            points = new List.from(points);
+          if (SelectedTool.selectedTool == Tool.brush) {
+            setState(() {
+              RenderBox object = context.findRenderObject();
+              Offset localPosition =
+                  object.globalToLocal(details.globalPosition);
+              points = new List.from(points);
 
-            Paint paint = new Paint()
-              ..color = BrushValues.color
-              ..strokeCap = StrokeCap.round
-              ..strokeWidth = BrushValues.thickness;
+              Paint paint = new Paint()
+                ..color = BrushValues.color
+                ..strokeCap = StrokeCap.round
+                ..strokeWidth = BrushValues.thickness;
 
-            points.add(new PaintPoint(localPosition, paint));
-          });
+              points.add(new PaintPoint(localPosition, paint));
+            });
+          }
         },
         onPanEnd: (DragEndDetails details) => points.add(null),
         child: CustomPaint(

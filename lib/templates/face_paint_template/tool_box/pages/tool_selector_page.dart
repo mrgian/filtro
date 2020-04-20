@@ -10,6 +10,8 @@ class ToolSelectorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SelectedTool.selectedTool = Tool.none;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -75,4 +77,10 @@ class ToolButton extends StatelessWidget {
       ),
     );
   }
+}
+
+enum Tool { none, brush, text }
+
+class SelectedTool {
+  static Tool selectedTool = Tool.none;
 }

@@ -17,6 +17,13 @@ class _BrushPageState extends State<BrushPage> {
   Color pickerColor = BrushValues.color;
 
   @override
+  void initState() {
+    super.initState();
+
+    SelectedTool.selectedTool = Tool.brush;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
