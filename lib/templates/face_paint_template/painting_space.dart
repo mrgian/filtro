@@ -21,37 +21,14 @@ class _PaintingSpaceState extends State<PaintingSpace> {
         onPanUpdate: (DragUpdateDetails details) {
           if (SelectedTool.selectedTool == Tool.brush) {
             setState(() {
-              RenderBox object = context.findRenderObject();
-              Offset localPosition =
-                  object.globalToLocal(details.globalPosition);
-              points = new List.from(points);
-
-              Paint paint = new Paint()
-                ..color = BrushValues.color
-                ..strokeCap = StrokeCap.round
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = BrushValues.thickness;
-
-              points.add(new PaintPoint(localPosition, paint));
+              addPoint(details);
             });
           }
         },
         onPanEnd: (DragEndDetails details) {
-          Path path = new Path();
-          for (int i = 0; i < points.length; i++) {
-            if (i == 0)
-              path.moveTo(points[i].offset.dx, points[i].offset.dy);
-            else
-              path.lineTo(points[i].offset.dx, points[i].offset.dy);
-          }
-
-          Paint paint = new Paint()
-            ..color = BrushValues.color
-            ..strokeCap = StrokeCap.round
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = BrushValues.thickness;
-          paths.add(new PaintPath(path, paint));
-          points = <PaintPoint>[];
+          setState(() {
+            stopLine();
+          });
         },
         child: CustomPaint(
           painter: Painter(
@@ -62,6 +39,39 @@ class _PaintingSpaceState extends State<PaintingSpace> {
         ),
       ),
     );
+  }
+
+  addPoint(DragUpdateDetails details) {
+    RenderBox object = context.findRenderObject();
+    Offset localPosition = object.globalToLocal(details.globalPosition);
+    points = new List.from(points);
+
+    Paint paint = new Paint()
+      ..color = BrushValues.color
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = BrushValues.thickness;
+
+    if (localPosition.dx < 400 && localPosition.dy < 400)
+      points.add(new PaintPoint(localPosition, paint));
+  }
+
+  stopLine() {
+    Path path = new Path();
+    for (int i = 0; i < points.length; i++) {
+      if (i == 0)
+        path.moveTo(points[i].offset.dx, points[i].offset.dy);
+      else
+        path.lineTo(points[i].offset.dx, points[i].offset.dy);
+    }
+
+    Paint paint = new Paint()
+      ..color = BrushValues.color
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = BrushValues.thickness;
+    paths.add(new PaintPath(path, paint));
+    points = <PaintPoint>[];
   }
 }
 
@@ -76,15 +86,16 @@ class Painter extends CustomPainter {
     for (var path in paths) canvas.drawPath(path.path, path.paint);
 
     for (int i = 0; i < points.length - 1; i++) {
-      if (points[i] != null && points[i + 1] != null) {
-        if (points[i].offset.dx < 400 &&
-            points[i].offset.dy < 400 &&
-            points[i + 1].offset.dx < 400 &&
-            points[i + 1].offset.dy < 400)
-          canvas.drawLine(
-              points[i].offset, points[i + 1].offset, points[i].paint);
-      }
+      if (points[i] != null && points[i + 1] != null)
+        canvas.drawLine(
+            points[i].offset, points[i + 1].offset, points[i].paint);
     }
+
+    /*TextSpan span =
+        new TextSpan(style: new TextStyle(color: Colors.white), text: 'Greve');
+    TextPainter tp = new TextPainter(text: span, textAlign: TextAlign.left);
+    tp.layout();
+    tp.paint(canvas, new Offset(5.0, 5.0));*/
   }
 
   @override
