@@ -10,6 +10,7 @@ class PaintingSpace extends StatefulWidget {
 
 class _PaintingSpaceState extends State<PaintingSpace> {
   List<PaintPoint> points = <PaintPoint>[];
+  List<PaintPath> paths = <PaintPath>[];
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +29,34 @@ class _PaintingSpaceState extends State<PaintingSpace> {
               Paint paint = new Paint()
                 ..color = BrushValues.color
                 ..strokeCap = StrokeCap.round
+                ..style = PaintingStyle.stroke
                 ..strokeWidth = BrushValues.thickness;
 
               points.add(new PaintPoint(localPosition, paint));
             });
           }
         },
-        onPanEnd: (DragEndDetails details) => points.add(null),
+        onPanEnd: (DragEndDetails details) {
+          Path path = new Path();
+          for (int i = 0; i < points.length; i++) {
+            if (i == 0)
+              path.moveTo(points[i].offset.dx, points[i].offset.dy);
+            else
+              path.lineTo(points[i].offset.dx, points[i].offset.dy);
+          }
+
+          Paint paint = new Paint()
+            ..color = BrushValues.color
+            ..strokeCap = StrokeCap.round
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = BrushValues.thickness;
+          paths.add(new PaintPath(path, paint));
+          points = <PaintPoint>[];
+        },
         child: CustomPaint(
           painter: Painter(
             points: points,
+            paths: paths,
           ),
           size: Size.infinite,
         ),
@@ -48,11 +67,14 @@ class _PaintingSpaceState extends State<PaintingSpace> {
 
 class Painter extends CustomPainter {
   List<PaintPoint> points;
+  List<PaintPath> paths;
 
-  Painter({this.points});
+  Painter({this.points, this.paths});
 
   @override
   void paint(Canvas canvas, Size size) {
+    for (var path in paths) canvas.drawPath(path.path, path.paint);
+
     for (int i = 0; i < points.length - 1; i++) {
       if (points[i] != null && points[i + 1] != null) {
         if (points[i].offset.dx < 400 &&
@@ -74,6 +96,13 @@ class PaintPoint {
   Paint paint;
 
   PaintPoint(this.offset, this.paint);
+}
+
+class PaintPath {
+  Path path;
+  Paint paint;
+
+  PaintPath(this.path, this.paint);
 }
 
 class BrushValues {
