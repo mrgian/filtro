@@ -1,17 +1,14 @@
-import 'package:flitro/templates/face_paint_template/tool_box/pages/brush_page.dart';
+import 'package:flitro/templates/face_paint_template/paint_data.dart';
 import 'package:flitro/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ToolSelectorPage extends StatelessWidget {
-  final Function changeTool;
-
-  //const ToolSelector({Key key, this.changeTool}) : super(key: key);
-  ToolSelectorPage(this.changeTool);
+  const ToolSelectorPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    SelectedTool.selectedTool = Tool.text;
-
+    final paintData = Provider.of<PaintData>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -26,8 +23,9 @@ class ToolSelectorPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ToolButton(
-                icon: Icons.brush,
-                onTap: () => changeTool(BrushPage(changeTool))),
+              icon: Icons.brush,
+              onTap: () => paintData.currentPage = PaintData.pages[1],
+            ),
             ToolButton(icon: Icons.text_fields, onTap: null),
           ],
         ),
@@ -77,10 +75,4 @@ class ToolButton extends StatelessWidget {
       ),
     );
   }
-}
-
-enum Tool { text, brush }
-
-class SelectedTool {
-  static Tool selectedTool = Tool.text;
 }

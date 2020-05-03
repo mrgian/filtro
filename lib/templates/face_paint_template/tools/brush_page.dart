@@ -1,30 +1,15 @@
-import 'package:flitro/templates/face_paint_template/painting_space.dart';
-import 'package:flitro/templates/face_paint_template/tool_box/pages/tool_selector_page.dart';
+import 'package:flitro/templates/face_paint_template/paint_data.dart';
 import 'package:flitro/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:provider/provider.dart';
 
-class BrushPage extends StatefulWidget {
-  final Function changeTool;
-
-  BrushPage(this.changeTool);
-
-  @override
-  _BrushPageState createState() => _BrushPageState();
-}
-
-class _BrushPageState extends State<BrushPage> {
-  Color pickerColor = BrushValues.color;
-
-  @override
-  void initState() {
-    super.initState();
-
-    SelectedTool.selectedTool = Tool.brush;
-  }
+class BrushPage extends StatelessWidget {
+  const BrushPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final paintData = Provider.of<PaintData>(context);
     return Column(
       children: <Widget>[
         Padding(
@@ -45,8 +30,8 @@ class _BrushPageState extends State<BrushPage> {
                 height: 50,
                 child: Center(
                   child: Container(
-                    width: BrushValues.thickness,
-                    height: BrushValues.thickness,
+                    width: paintData.thickness,
+                    height: paintData.thickness,
                     decoration: new BoxDecoration(
                         color: Colors.black, shape: BoxShape.circle),
                   ),
@@ -56,13 +41,11 @@ class _BrushPageState extends State<BrushPage> {
                 child: Slider(
                   activeColor: MyColors.black,
                   inactiveColor: MyColors.darkGrey,
-                  value: BrushValues.thickness,
+                  value: paintData.thickness,
                   min: 1.0,
                   max: 20.0,
                   onChanged: (t) {
-                    setState(() {
-                      BrushValues.thickness = t;
-                    });
+                    paintData.thickness = t;
                   },
                 ),
               ),
@@ -90,14 +73,14 @@ class _BrushPageState extends State<BrushPage> {
                     width: 40,
                     height: 40,
                     decoration: new BoxDecoration(
-                        color: BrushValues.color, shape: BoxShape.circle),
+                        color: paintData.color, shape: BoxShape.circle),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: GestureDetector(
-                  onTap: () => selectColor(),
+                  onTap: () => selectColor(context, paintData),
                   child: Container(
                     decoration: BoxDecoration(
                         color: MyColors.black,
@@ -123,7 +106,7 @@ class _BrushPageState extends State<BrushPage> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                widget.changeTool(ToolSelectorPage(widget.changeTool));
+                paintData.currentPage = PaintData.pages[0];
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -168,7 +151,9 @@ class _BrushPageState extends State<BrushPage> {
     );
   }
 
-  selectColor() {
+  selectColor(BuildContext context, var paintData) {
+    Color pickerColor = paintData.color;
+
     showDialog(
       context: context,
       child: AlertDialog(
@@ -177,9 +162,7 @@ class _BrushPageState extends State<BrushPage> {
           child: ColorPicker(
             pickerColor: pickerColor,
             onColorChanged: (color) {
-              setState(() {
-                pickerColor = color;
-              });
+              pickerColor = color;
             },
             showLabel: false,
             enableAlpha: false,
@@ -190,7 +173,7 @@ class _BrushPageState extends State<BrushPage> {
           FlatButton(
             child: const Text('Select'),
             onPressed: () {
-              setState(() => BrushValues.color = pickerColor);
+              paintData.color = pickerColor;
               Navigator.of(context).pop();
             },
           ),
