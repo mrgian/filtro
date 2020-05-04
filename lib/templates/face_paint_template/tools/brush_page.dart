@@ -128,20 +128,25 @@ class BrushPage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: MyColors.black,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Undo',
-                    style: TextStyle(
-                        fontFamily: 'cocogoose',
-                        fontSize: 15,
-                        color: MyColors.white),
+            GestureDetector(
+              onTap: () {
+                paintData.undo();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: MyColors.black,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'Undo',
+                      style: TextStyle(
+                          fontFamily: 'cocogoose',
+                          fontSize: 15,
+                          color: MyColors.white),
+                    ),
                   ),
                 ),
               ),

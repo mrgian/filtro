@@ -22,7 +22,7 @@ class PaintData with ChangeNotifier {
       ..strokeWidth = thickness;
 
     if (localPosition.dx < 400 && localPosition.dy < 400)
-      points.add(new PaintPoint(localPosition, paint));
+      _points.add(new PaintPoint(localPosition, paint));
 
     notifyListeners();
   }
@@ -46,9 +46,15 @@ class PaintData with ChangeNotifier {
       ..style = PaintingStyle.stroke
       ..strokeWidth = thickness;
 
-    paths.add(new PaintPath(path, paint));
+    _paths.add(new PaintPath(path, paint));
     _points = <PaintPoint>[];
 
+    notifyListeners();
+  }
+
+  //Undo
+  undo() {
+    _paths.removeLast();
     notifyListeners();
   }
 
@@ -78,12 +84,6 @@ class PaintData with ChangeNotifier {
   }
 
   //Tool
-  /*Tool _currentTool = Tool.none;
-  get currentTool => _currentTool;
-  set currentTool(Tool newTool) {
-    _currentTool = newTool;
-    notifyListeners();
-  }*/
   Tool currentTool = Tool.none;
 }
 

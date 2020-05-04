@@ -49,5 +49,5 @@ class Painter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(Painter oldPainter) => oldPainter.points != points;
+  bool shouldRepaint(Painter oldPainter) => true;
 }
