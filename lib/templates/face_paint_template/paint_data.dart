@@ -78,12 +78,13 @@ class PaintData with ChangeNotifier {
   }
 
   //Tool
-  Tool _currentTool = Tool.none;
+  /*Tool _currentTool = Tool.none;
   get currentTool => _currentTool;
   set currentTool(Tool newTool) {
     _currentTool = newTool;
     notifyListeners();
-  }
+  }*/
+  Tool currentTool = Tool.none;
 }
 
 class PaintPoint {

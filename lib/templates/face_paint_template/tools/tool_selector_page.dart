@@ -9,6 +9,7 @@ class ToolSelectorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paintData = Provider.of<PaintData>(context);
+    paintData.currentTool = Tool.none;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

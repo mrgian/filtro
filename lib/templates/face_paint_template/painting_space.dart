@@ -13,10 +13,11 @@ class PaintingSpace extends StatelessWidget {
       height: 400,
       child: GestureDetector(
         onPanUpdate: (DragUpdateDetails details) {
-          paintData.addPoint(details, context);
+          if (paintData.currentTool == Tool.draw)
+            paintData.addPoint(details, context);
         },
         onPanEnd: (DragEndDetails details) {
-          paintData.stopLine();
+          if (paintData.currentTool == Tool.draw) paintData.stopLine();
         },
         child: CustomPaint(
           painter: Painter(

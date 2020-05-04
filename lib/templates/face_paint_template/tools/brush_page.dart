@@ -10,6 +10,7 @@ class BrushPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paintData = Provider.of<PaintData>(context);
+    paintData.currentTool = Tool.draw;
     return Column(
       children: <Widget>[
         Padding(
