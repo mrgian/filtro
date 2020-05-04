@@ -1,3 +1,4 @@
+import 'package:flitro/templates/face_paint_template/button.dart';
 import 'package:flitro/templates/face_paint_template/paint_data.dart';
 import 'package:flitro/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -80,23 +81,11 @@ class BrushPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
-                child: GestureDetector(
-                  onTap: () => selectColor(context, paintData),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: MyColors.black,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'Select color...',
-                        style: TextStyle(
-                            fontFamily: 'cocogoose',
-                            fontSize: 15,
-                            color: MyColors.white),
-                      ),
-                    ),
-                  ),
+                child: MyButton(
+                  text: 'Select color',
+                  onTap: () {
+                    selectColor(context, paintData);
+                  },
                 ),
               ),
             ],
@@ -105,51 +94,17 @@ class BrushPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            GestureDetector(
+            MyButton(
+              text: 'Back',
               onTap: () {
                 paintData.currentPage = PaintData.pages[0];
               },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: MyColors.black,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                          fontFamily: 'cocogoose',
-                          fontSize: 15,
-                          color: MyColors.white),
-                    ),
-                  ),
-                ),
-              ),
             ),
-            GestureDetector(
+            MyButton(
+              text: 'Undo',
               onTap: () {
                 paintData.undo();
               },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: MyColors.black,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'Undo',
-                      style: TextStyle(
-                          fontFamily: 'cocogoose',
-                          fontSize: 15,
-                          color: MyColors.white),
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         )
@@ -163,7 +118,11 @@ class BrushPage extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: const Text('Pick a color'),
+        title: const Text(
+          'Pick a color',
+          style: TextStyle(
+              fontFamily: 'cocogoose', fontSize: 20, color: MyColors.black),
+        ),
         content: SingleChildScrollView(
           child: ColorPicker(
             pickerColor: pickerColor,
@@ -176,13 +135,13 @@ class BrushPage extends StatelessWidget {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
-            child: const Text('Select'),
-            onPressed: () {
+          MyButton(
+            text: 'Select',
+            onTap: () {
               paintData.color = pickerColor;
               Navigator.of(context).pop();
             },
-          ),
+          )
         ],
       ),
     );

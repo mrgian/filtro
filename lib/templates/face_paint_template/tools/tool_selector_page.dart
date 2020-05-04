@@ -1,3 +1,4 @@
+import 'package:flitro/templates/face_paint_template/button.dart';
 import 'package:flitro/templates/face_paint_template/paint_data.dart';
 import 'package:flitro/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -28,24 +29,12 @@ class ToolSelectorPage extends StatelessWidget {
               onTap: () => paintData.currentPage = PaintData.pages[1],
             ),
             ToolButton(icon: Icons.text_fields, onTap: null),
+            ToolButton(icon: Icons.image, onTap: null),
           ],
         ),
         Padding(
           padding: const EdgeInsets.only(top: 48),
-          child: Container(
-            decoration: BoxDecoration(
-                color: MyColors.black, borderRadius: BorderRadius.circular(15)),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                'Next',
-                style: TextStyle(
-                    fontFamily: 'cocogoose',
-                    fontSize: 15,
-                    color: MyColors.white),
-              ),
-            ),
-          ),
+          child: MyButton(text: 'Next', onTap: null),
         ),
       ],
     );
