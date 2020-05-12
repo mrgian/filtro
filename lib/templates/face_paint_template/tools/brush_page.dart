@@ -12,20 +12,19 @@ class BrushPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final paintData = Provider.of<PaintData>(context);
     paintData.currentTool = Tool.draw;
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: <Widget>[
-              Text('Brush thickness',
-                  style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: <Widget>[
+                Text('Brush thickness',
+                    style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
+          Row(
             children: <Widget>[
               SizedBox(
                 width: 50,
@@ -53,62 +52,62 @@ class BrushPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: <Widget>[
-              Text('Brush color',
-                  style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: <Widget>[
+                Text('Brush color',
+                    style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: <Widget>[
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: Center(
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: new BoxDecoration(
-                        color: paintData.color, shape: BoxShape.circle),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Center(
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: new BoxDecoration(
+                          color: paintData.color, shape: BoxShape.circle),
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: MyButton(
-                  text: 'Select color',
-                  onTap: () {
-                    selectColor(context, paintData);
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: MyButton(
+                    text: 'Select color',
+                    onTap: () {
+                      selectColor(context, paintData);
+                    },
+                  ),
                 ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              MyButton(
+                text: 'Back',
+                onTap: () {
+                  paintData.currentPage = PaintData.pages[0];
+                },
+              ),
+              MyButton(
+                text: 'Undo',
+                onTap: () {
+                  paintData.undo();
+                },
               ),
             ],
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            MyButton(
-              text: 'Back',
-              onTap: () {
-                paintData.currentPage = PaintData.pages[0];
-              },
-            ),
-            MyButton(
-              text: 'Undo',
-              onTap: () {
-                paintData.undo();
-              },
-            ),
-          ],
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 

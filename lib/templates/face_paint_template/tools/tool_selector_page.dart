@@ -11,32 +11,34 @@ class ToolSelectorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final paintData = Provider.of<PaintData>(context);
     paintData.currentTool = Tool.none;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(bottom: 32),
-          child: Text(
-            'Select a tool',
-            style: TextStyle(fontFamily: 'cocogoose', fontSize: 20),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ToolButton(
-              icon: Icons.brush,
-              onTap: () => paintData.currentPage = PaintData.pages[1],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 32, bottom: 32),
+            child: Text(
+              'Select a tool',
+              style: TextStyle(fontFamily: 'cocogoose', fontSize: 20),
             ),
-            ToolButton(icon: Icons.text_fields, onTap: null),
-            ToolButton(icon: Icons.image, onTap: null),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 48),
-          child: MyButton(text: 'Next', onTap: null),
-        ),
-      ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ToolButton(
+                icon: Icons.brush,
+                onTap: () => paintData.currentPage = PaintData.pages[1],
+              ),
+              ToolButton(icon: Icons.text_fields, onTap: null),
+              ToolButton(icon: Icons.image, onTap: null),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 48),
+            child: MyButton(text: 'Next', onTap: null),
+          ),
+        ],
+      ),
     );
   }
 }
