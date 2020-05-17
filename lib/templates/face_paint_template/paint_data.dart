@@ -1,4 +1,5 @@
 import 'package:flitro/templates/face_paint_template/tools/brush_page.dart';
+import 'package:flitro/templates/face_paint_template/tools/text_page.dart';
 import 'package:flitro/templates/face_paint_template/tools/tool_selector_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,11 @@ class PaintData with ChangeNotifier {
   }
 
   //Page
-  static List<Widget> pages = <Widget>[ToolSelectorPage(), BrushPage()];
+  static List<Widget> pages = <Widget>[
+    ToolSelectorPage(),
+    BrushPage(),
+    TextPage()
+  ];
   Widget _currentPage = pages.first;
   get currentPage => _currentPage;
   set currentPage(Widget newPage) {
@@ -85,6 +90,30 @@ class PaintData with ChangeNotifier {
 
   //Tool
   Tool currentTool = Tool.none;
+
+  //Text
+  String _text = 'Edit me';
+  get text => _text;
+  set text(String newText) {
+    _text = newText;
+    notifyListeners();
+  }
+
+  //Text size
+  double _textSize = 10;
+  get textSize => _textSize;
+  set textSize(double newValue) {
+    _textSize = newValue;
+    notifyListeners();
+  }
+
+  //Text color
+  Color _textColor = Colors.red;
+  get textColor => _textColor;
+  set textColor(Color newColor) {
+    _textColor = newColor;
+    notifyListeners();
+  }
 }
 
 class PaintPoint {

@@ -29,7 +29,9 @@ class ToolSelectorPage extends StatelessWidget {
                 icon: Icons.brush,
                 onTap: () => paintData.currentPage = PaintData.pages[1],
               ),
-              ToolButton(icon: Icons.text_fields, onTap: null),
+              ToolButton(
+                  icon: Icons.text_fields,
+                  onTap: () => paintData.currentPage = PaintData.pages[2]),
               ToolButton(icon: Icons.image, onTap: null),
             ],
           ),
