@@ -15,9 +15,16 @@ class PaintingSpace extends StatelessWidget {
         onPanUpdate: (DragUpdateDetails details) {
           if (paintData.currentTool == Tool.draw)
             paintData.addPoint(details, context);
+
+          if (paintData.currentTool == Tool.text)
+            paintData.moveText(details, context);
         },
         onPanEnd: (DragEndDetails details) {
           if (paintData.currentTool == Tool.draw) paintData.stopLine();
+        },
+        onTapDown: (TapDownDetails details) {
+          if (paintData.currentTool == Tool.text)
+            paintData.selectMovingText(details, context);
         },
         child: CustomPaint(
           painter: Painter(

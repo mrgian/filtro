@@ -123,6 +123,27 @@ class PaintData with ChangeNotifier {
     _texts.add(new PaintText(text, textColor, new Offset(200, 200), textSize));
     notifyListeners();
   }
+
+  //Move text
+  int _selectedText = 0;
+
+  moveText(DragUpdateDetails details, BuildContext context) {
+    _texts[_selectedText].offset += details.delta;
+    notifyListeners();
+  }
+
+  selectMovingText(TapDownDetails details, BuildContext context) {
+    RenderBox object = context.findRenderObject();
+    Offset localPosition = object.globalToLocal(details.globalPosition);
+    if (_texts.length != 0) {
+      for (int i = 0; i < _texts.length; i++) {
+        double distance = (_texts[i].offset - localPosition).distance.abs();
+        double minDistance =
+            (_texts[_selectedText].offset - localPosition).distance.abs();
+        if (distance < minDistance) _selectedText = i;
+      }
+    }
+  }
 }
 
 class PaintText {
