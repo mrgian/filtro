@@ -100,7 +100,7 @@ class TextPage extends StatelessWidget {
                   ),
                 ),
                 MyButton(text: 'Edit', onTap: null),
-                MyButton(text: 'Add', onTap: null),
+                MyButton(text: 'Add', onTap: () => paintData.addText()),
               ],
             ),
           ),
@@ -127,7 +127,7 @@ class TextPage extends StatelessWidget {
   }
 
   selectColor(BuildContext context, var paintData) {
-    Color pickerColor = paintData.color;
+    Color pickerColor = paintData.textColor;
 
     showDialog(
       context: context,

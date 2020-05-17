@@ -23,6 +23,7 @@ class PaintingSpace extends StatelessWidget {
           painter: Painter(
             points: paintData.points,
             paths: paintData.paths,
+            texts: paintData.texts,
           ),
           size: Size.infinite,
         ),
@@ -34,17 +35,34 @@ class PaintingSpace extends StatelessWidget {
 class Painter extends CustomPainter {
   List<PaintPoint> points;
   List<PaintPath> paths;
+  List<PaintText> texts;
 
-  Painter({this.points, this.paths});
+  Painter({this.points, this.paths, this.texts});
 
   @override
   void paint(Canvas canvas, Size size) {
+    //paths
     for (var path in paths) canvas.drawPath(path.path, path.paint);
 
+    //points
     for (int i = 0; i < points.length - 1; i++) {
       if (points[i] != null && points[i + 1] != null)
         canvas.drawLine(
             points[i].offset, points[i + 1].offset, points[i].paint);
+    }
+
+    //texts
+    for (var text in texts) {
+      TextSpan span = TextSpan(
+          text: text.text,
+          style: TextStyle(
+              fontFamily: 'cocogoose', color: text.color, fontSize: text.size));
+      TextPainter textPainter = TextPainter(
+          text: span,
+          textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr);
+      textPainter.layout();
+      textPainter.paint(canvas, text.offset);
     }
   }
 

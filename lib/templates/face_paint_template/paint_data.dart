@@ -114,6 +114,24 @@ class PaintData with ChangeNotifier {
     _textColor = newColor;
     notifyListeners();
   }
+
+  //Texts
+  List<PaintText> _texts = <PaintText>[];
+  get texts => _texts;
+
+  addText() {
+    _texts.add(new PaintText(text, textColor, new Offset(200, 200), textSize));
+    notifyListeners();
+  }
+}
+
+class PaintText {
+  Offset offset;
+  String text;
+  Color color;
+  double size;
+
+  PaintText(this.text, this.color, this.offset, this.size);
 }
 
 class PaintPoint {
