@@ -99,7 +99,8 @@ class TextPage extends StatelessWidget {
                         color: paintData.textColor),
                   ),
                 ),
-                MyButton(text: 'Edit', onTap: null),
+                MyButton(
+                    text: 'Edit', onTap: () => editText(context, paintData)),
                 MyButton(text: 'Add', onTap: () => paintData.addText()),
               ],
             ),
@@ -126,7 +127,32 @@ class TextPage extends StatelessWidget {
     );
   }
 
-  selectColor(BuildContext context, var paintData) {
+  editText(BuildContext context, PaintData paintData) {
+    String text = paintData.text;
+    showDialog(
+      context: context,
+      child: AlertDialog(
+        title: const Text('Edit text'),
+        content: TextField(
+          decoration: InputDecoration(hintText: paintData.text),
+          onChanged: (newText) {
+            text = newText;
+          },
+        ),
+        actions: <Widget>[
+          MyButton(
+            text: 'Ok',
+            onTap: () {
+              paintData.text = text;
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  selectColor(BuildContext context, PaintData paintData) {
     Color pickerColor = paintData.textColor;
 
     showDialog(
