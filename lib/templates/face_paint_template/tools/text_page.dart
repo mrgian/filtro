@@ -12,121 +12,134 @@ class TextPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final paintData = Provider.of<PaintData>(context);
     paintData.currentTool = Tool.text;
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: <Widget>[
-                Text('Text color',
-                    style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-              ],
+    return WillPopScope(
+      onWillPop: () => onWillPop(paintData),
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[
+                  Text('Text color',
+                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Center(
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: new BoxDecoration(
-                          color: paintData.textColor, shape: BoxShape.circle),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Center(
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: new BoxDecoration(
+                            color: paintData.textColor, shape: BoxShape.circle),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: MyButton(
-                    text: 'Select color',
-                    onTap: () {
-                      selectColor(context, paintData);
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: MyButton(
+                      text: 'Select color',
+                      onTap: () {
+                        selectColor(context, paintData);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[
+                  Text('Text size',
+                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
+                ],
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Slider(
+                    activeColor: MyColors.black,
+                    inactiveColor: MyColors.darkGrey,
+                    value: paintData.textSize,
+                    min: 5.0,
+                    max: 40.0,
+                    onChanged: (t) {
+                      paintData.textSize = t;
                     },
                   ),
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: <Widget>[
-                Text('Text size',
-                    style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[
+                  Text('Text preview',
+                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
+                ],
+              ),
             ),
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Slider(
-                  activeColor: MyColors.black,
-                  inactiveColor: MyColors.darkGrey,
-                  value: paintData.textSize,
-                  min: 5.0,
-                  max: 40.0,
-                  onChanged: (t) {
-                    paintData.textSize = t;
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      paintData.text,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontFamily: 'cocogoose',
+                          fontSize: paintData.textSize,
+                          color: paintData.textColor),
+                    ),
+                  ),
+                  MyButton(
+                      text: 'Edit', onTap: () => editText(context, paintData)),
+                  MyButton(text: 'Add', onTap: () => paintData.addText()),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                MyButton(
+                  text: 'Back',
+                  onTap: () {
+                    pop(paintData);
                   },
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: <Widget>[
-                Text('Text preview',
-                    style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    paintData.text,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontFamily: 'cocogoose',
-                        fontSize: paintData.textSize,
-                        color: paintData.textColor),
-                  ),
-                ),
                 MyButton(
-                    text: 'Edit', onTap: () => editText(context, paintData)),
-                MyButton(text: 'Add', onTap: () => paintData.addText()),
+                  text: 'Undo',
+                  onTap: () {
+                    paintData.undo();
+                  },
+                ),
               ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              MyButton(
-                text: 'Back',
-                onTap: () {
-                  paintData.currentPage = PaintData.pages[0];
-                },
-              ),
-              MyButton(
-                text: 'Undo',
-                onTap: () {
-                  paintData.undo();
-                },
-              ),
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  Future<bool> onWillPop(PaintData paintData) async {
+    pop(paintData);
+    return false;
+  }
+
+  pop(PaintData paintData) {
+    paintData.currentPage = PaintData.pages[0];
+    paintData.currentTool = Tool.none;
   }
 
   editText(BuildContext context, PaintData paintData) {

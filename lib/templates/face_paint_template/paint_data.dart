@@ -55,7 +55,8 @@ class PaintData with ChangeNotifier {
 
   //Undo
   undo() {
-    if (_paths.length > 0) _paths.removeLast();
+    if (_paths.length > 0 && currentTool == Tool.draw) _paths.removeLast();
+    if (_texts.length > 0 && currentTool == Tool.text) _texts.removeLast();
     notifyListeners();
   }
 
