@@ -93,6 +93,8 @@ class TextPage extends StatelessWidget {
                 Expanded(
                   child: Text(
                     paintData.text,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: TextStyle(
                         fontFamily: 'cocogoose',
                         fontSize: paintData.textSize,
