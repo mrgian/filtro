@@ -129,8 +129,10 @@ class PaintData with ChangeNotifier {
   int _selectedText = 0;
 
   moveText(DragUpdateDetails details, BuildContext context) {
-    _texts[_selectedText].offset += details.delta;
-    notifyListeners();
+    if (_texts.length != 0) {
+      _texts[_selectedText].offset += details.delta;
+      notifyListeners();
+    }
   }
 
   selectMovingText(TapDownDetails details, BuildContext context) {
