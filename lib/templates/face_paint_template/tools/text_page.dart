@@ -17,95 +17,136 @@ class TextPage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[
-                  Text('Text color',
-                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-                ],
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: MyColors.lightGrey,
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Row(
+              child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Center(
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: new BoxDecoration(
-                            color: paintData.textColor, shape: BoxShape.circle),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text('Text color',
+                            style: TextStyle(
+                                fontFamily: 'cocogoose', fontSize: 20)),
+                      ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: MyButton(
-                      text: 'Select color',
-                      onTap: () {
-                        selectColor(context, paintData);
-                      },
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Center(
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: new BoxDecoration(
+                                  color: paintData.textColor,
+                                  shape: BoxShape.circle),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: MyButton(
+                            text: 'Select color',
+                            onTap: () {
+                              selectColor(context, paintData);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[
-                  Text('Text size',
-                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-                ],
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: MyColors.lightGrey,
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Slider(
-                    activeColor: MyColors.black,
-                    inactiveColor: MyColors.darkGrey,
-                    value: paintData.textSize,
-                    min: 5.0,
-                    max: 40.0,
-                    onChanged: (t) {
-                      paintData.textSize = t;
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
+              child: Column(
                 children: <Widget>[
-                  Text('Text preview',
-                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      paintData.text,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                          fontFamily: 'cocogoose',
-                          fontSize: paintData.textSize,
-                          color: paintData.textColor),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text('Text size',
+                            style: TextStyle(
+                                fontFamily: 'cocogoose', fontSize: 20)),
+                      ],
                     ),
                   ),
-                  MyButton(
-                      text: 'Edit', onTap: () => editText(context, paintData)),
-                  MyButton(text: 'Add', onTap: () => paintData.addText()),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Slider(
+                          activeColor: MyColors.black,
+                          inactiveColor: MyColors.darkGrey,
+                          value: paintData.textSize,
+                          min: 5.0,
+                          max: 40.0,
+                          onChanged: (t) {
+                            paintData.textSize = t;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: MyColors.lightGrey,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text('Text preview',
+                            style: TextStyle(
+                                fontFamily: 'cocogoose', fontSize: 20)),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            paintData.text,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontFamily: 'cocogoose',
+                                fontSize: paintData.textSize,
+                                color: paintData.textColor),
+                          ),
+                        ),
+                        MyButton(
+                            text: 'Edit',
+                            onTap: () => editText(context, paintData)),
+                        MyButton(text: 'Add', onTap: () => paintData.addText()),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

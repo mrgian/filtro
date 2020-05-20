@@ -17,75 +17,102 @@ class BrushPage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[
-                  Text('Brush thickness',
-                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
-                ],
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: MyColors.lightGrey,
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Center(
-                    child: Container(
-                      width: paintData.thickness,
-                      height: paintData.thickness,
-                      decoration: new BoxDecoration(
-                          color: Colors.black, shape: BoxShape.circle),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text('Brush thickness',
+                            style: TextStyle(
+                                fontFamily: 'cocogoose', fontSize: 20)),
+                      ],
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Slider(
-                    activeColor: MyColors.black,
-                    inactiveColor: MyColors.darkGrey,
-                    value: paintData.thickness,
-                    min: 1.0,
-                    max: 20.0,
-                    onChanged: (t) {
-                      paintData.thickness = t;
-                    },
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Center(
+                          child: Container(
+                            width: paintData.thickness,
+                            height: paintData.thickness,
+                            decoration: new BoxDecoration(
+                                color: Colors.black, shape: BoxShape.circle),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Slider(
+                          activeColor: MyColors.black,
+                          inactiveColor: MyColors.darkGrey,
+                          value: paintData.thickness,
+                          min: 1.0,
+                          max: 20.0,
+                          onChanged: (t) {
+                            paintData.thickness = t;
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[
-                  Text('Brush color',
-                      style: TextStyle(fontFamily: 'cocogoose', fontSize: 20)),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Row(
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: MyColors.lightGrey,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Center(
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: new BoxDecoration(
-                            color: paintData.color, shape: BoxShape.circle),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text('Brush color',
+                            style: TextStyle(
+                                fontFamily: 'cocogoose', fontSize: 20)),
+                      ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: MyButton(
-                      text: 'Select color',
-                      onTap: () {
-                        selectColor(context, paintData);
-                      },
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Center(
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: new BoxDecoration(
+                                  color: paintData.color,
+                                  shape: BoxShape.circle),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: MyButton(
+                            text: 'Select color',
+                            onTap: () {
+                              selectColor(context, paintData);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
