@@ -1,6 +1,7 @@
 import 'package:flitro/templates/face_paint_template/button.dart';
 import 'package:flitro/templates/face_paint_template/paint_data.dart';
 import 'package:flitro/utils/colors.dart';
+import 'package:flitro/utils/scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,9 @@ class BrushPage extends StatelessWidget {
     paintData.currentTool = Tool.draw;
     return WillPopScope(
       onWillPop: () => onWillPop(paintData),
-      child: SingleChildScrollView(
+      child: SingleChildScrollViewWithScrollbar(
+        scrollbarColor: Theme.of(context).accentColor.withOpacity(0.75),
+        scrollbarThickness: 4.0,
         child: Column(
           children: <Widget>[
             Container(
