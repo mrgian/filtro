@@ -137,6 +137,8 @@ class PaintData with ChangeNotifier {
   }
 
   selectMovingText(TapDownDetails details, BuildContext context) {
+    //TODO Fix not in range exception
+    _selectedText = 0;
     RenderBox object = context.findRenderObject();
     Offset localPosition = object.globalToLocal(details.globalPosition);
     if (_texts.length != 0) {

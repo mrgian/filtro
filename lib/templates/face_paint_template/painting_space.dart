@@ -24,7 +24,8 @@ class PaintingSpace extends StatelessWidget {
         },
         onTapDown: (TapDownDetails details) {
           if (paintData.currentTool == Tool.text)
-            paintData.selectMovingText(details, context);
+            paintData.selectMovingText(
+                details, context); //TODO Fix not in range exception
         },
         child: CustomPaint(
           painter: Painter(
