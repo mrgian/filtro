@@ -63,7 +63,7 @@ class Painter extends CustomPainter {
       TextSpan span = TextSpan(
           text: text.text,
           style: TextStyle(
-              fontFamily: 'cocogoose', color: text.color, fontSize: text.size));
+              fontFamily: text.font, color: text.color, fontSize: text.size));
       TextPainter textPainter = TextPainter(
           text: span,
           textAlign: TextAlign.center,

@@ -84,6 +84,46 @@ class TextPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       children: <Widget>[
+                        Text('Text font',
+                            style: TextStyle(
+                                fontFamily: 'cocogoose', fontSize: 20)),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: paintData.font,
+                      items: PaintData.fonts.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value,
+                              style:
+                                  TextStyle(fontFamily: value, fontSize: 25)),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        paintData.font = newValue;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: MyColors.lightGrey,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: <Widget>[
                         Text('Text size',
                             style: TextStyle(
                                 fontFamily: 'cocogoose', fontSize: 20)),
@@ -98,7 +138,7 @@ class TextPage extends StatelessWidget {
                           inactiveColor: MyColors.darkGrey,
                           value: paintData.textSize,
                           min: 5.0,
-                          max: 40.0,
+                          max: 50.0,
                           onChanged: (t) {
                             paintData.textSize = t;
                           },
@@ -138,7 +178,7 @@ class TextPage extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: TextStyle(
-                                fontFamily: 'cocogoose',
+                                fontFamily: paintData.font,
                                 fontSize: paintData.textSize,
                                 color: paintData.textColor),
                           ),

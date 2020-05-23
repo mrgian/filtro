@@ -121,7 +121,8 @@ class PaintData with ChangeNotifier {
   get texts => _texts;
 
   addText() {
-    _texts.add(new PaintText(text, textColor, new Offset(200, 200), textSize));
+    _texts.add(
+        new PaintText(text, textColor, new Offset(200, 200), textSize, font));
     notifyListeners();
   }
 
@@ -147,6 +148,22 @@ class PaintData with ChangeNotifier {
       }
     }
   }
+
+  //fonts
+  static List<String> fonts = <String>[
+    'cocogoose',
+    'longshot',
+    'oldlondon',
+    'chicken',
+    'cherolina'
+  ];
+
+  String _font = fonts[1];
+  get font => _font;
+  set font(String newFont) {
+    _font = newFont;
+    notifyListeners();
+  }
 }
 
 class PaintText {
@@ -154,8 +171,9 @@ class PaintText {
   String text;
   Color color;
   double size;
+  String font;
 
-  PaintText(this.text, this.color, this.offset, this.size);
+  PaintText(this.text, this.color, this.offset, this.size, this.font);
 }
 
 class PaintPoint {

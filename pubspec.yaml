@@ -27,6 +27,18 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Cocogoose
+    - family: cocogoose
       fonts:
         - asset: assets/fonts/cocogoose.ttf
+    - family: chicken
+      fonts:
+        - asset: assets/fonts/chicken.ttf
+    - family: cherolina
+      fonts:
+        - asset: assets/fonts/cherolina.ttf
+    - family: longshot
+      fonts:
+        - asset: assets/fonts/longshot.ttf
+    - family: oldlondon
+      fonts:
+        - asset: assets/fonts/oldlondon.ttf
