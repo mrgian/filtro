@@ -138,7 +138,7 @@ class TextPage extends StatelessWidget {
                           inactiveColor: MyColors.darkGrey,
                           value: paintData.textSize,
                           min: 5.0,
-                          max: 50.0,
+                          max: 80.0,
                           onChanged: (t) {
                             paintData.textSize = t;
                           },
@@ -168,28 +168,24 @@ class TextPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            paintData.text,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontFamily: paintData.font,
-                                fontSize: paintData.textSize,
-                                color: paintData.textColor),
-                          ),
-                        ),
-                        MyButton(
-                            text: 'Edit',
-                            onTap: () => editText(context, paintData)),
-                        MyButton(text: 'Add', onTap: () => paintData.addText()),
-                      ],
-                    ),
+                  Text(
+                    paintData.text,
+                    //overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontFamily: paintData.font,
+                        fontSize: paintData.textSize,
+                        color: paintData.textColor),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      MyButton(
+                          text: 'Edit',
+                          onTap: () => editText(context, paintData)),
+                      MyButton(text: 'Add', onTap: () => paintData.addText()),
+                    ],
+                  )
                 ],
               ),
             ),
