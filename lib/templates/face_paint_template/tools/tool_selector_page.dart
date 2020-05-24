@@ -32,7 +32,9 @@ class ToolSelectorPage extends StatelessWidget {
               ToolButton(
                   icon: Icons.text_fields,
                   onTap: () => paintData.currentPage = PaintData.pages[2]),
-              ToolButton(icon: Icons.image, onTap: null),
+              ToolButton(
+                  icon: Icons.image,
+                  onTap: () => paintData.currentPage = PaintData.pages[3]),
             ],
           ),
           Padding(

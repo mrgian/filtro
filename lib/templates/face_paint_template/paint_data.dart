@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flitro/templates/face_paint_template/tools/brush_page.dart';
+import 'package:flitro/templates/face_paint_template/tools/image_page.dart';
 import 'package:flitro/templates/face_paint_template/tools/text_page.dart';
 import 'package:flitro/templates/face_paint_template/tools/tool_selector_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 enum Tool { none, draw, text }
 
@@ -80,7 +84,8 @@ class PaintData with ChangeNotifier {
   static List<Widget> pages = <Widget>[
     ToolSelectorPage(),
     BrushPage(),
-    TextPage()
+    TextPage(),
+    ImagePage()
   ];
   Widget _currentPage = pages.first;
   get currentPage => _currentPage;
@@ -149,6 +154,35 @@ class PaintData with ChangeNotifier {
         if (distance < minDistance) _selectedText = i;
       }
     }
+  }
+
+  //Image size
+  double _imageSize = 100;
+  get imageSize => _imageSize;
+  set imageSize(double newValue) {
+    _imageSize = newValue;
+    notifyListeners();
+  }
+
+  //Image
+  Image _image;
+  File _imageFile;
+  Widget getImage() {
+    if (_image == null)
+      return Container(width: 0, height: 0);
+    else
+      return _image;
+  }
+
+  setImage() async {
+    _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+    _image = Image.file(_imageFile, width: _imageSize);
+    notifyListeners();
+  }
+
+  updateImageSize() {
+    if (_imageFile != null) _image = Image.file(_imageFile, width: _imageSize);
+    notifyListeners();
   }
 
   //fonts
