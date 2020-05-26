@@ -2,6 +2,8 @@ import 'package:flitro/templates/face_paint_template/paint_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'paint_data.dart';
+
 class PaintingSpace extends StatelessWidget {
   const PaintingSpace({Key key}) : super(key: key);
 
@@ -32,6 +34,7 @@ class PaintingSpace extends StatelessWidget {
             points: paintData.points,
             paths: paintData.paths,
             texts: paintData.texts,
+            images: paintData.images,
           ),
           size: Size.infinite,
         ),
@@ -44,8 +47,9 @@ class Painter extends CustomPainter {
   List<PaintPoint> points;
   List<PaintPath> paths;
   List<PaintText> texts;
+  List<PaintImage> images;
 
-  Painter({this.points, this.paths, this.texts});
+  Painter({this.points, this.paths, this.texts, this.images});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -71,6 +75,11 @@ class Painter extends CustomPainter {
           textDirection: TextDirection.ltr);
       textPainter.layout();
       textPainter.paint(canvas, text.offset);
+    }
+
+    //images
+    for (var image in images) {
+      canvas.drawImage(image.image, image.offset, new Paint());
     }
   }
 

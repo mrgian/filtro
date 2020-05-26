@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flitro/templates/face_paint_template/tools/brush_page.dart';
 import 'package:flitro/templates/face_paint_template/tools/image_page.dart';
@@ -6,6 +7,7 @@ import 'package:flitro/templates/face_paint_template/tools/text_page.dart';
 import 'package:flitro/templates/face_paint_template/tools/tool_selector_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 
 enum Tool { none, draw, text }
@@ -156,35 +158,6 @@ class PaintData with ChangeNotifier {
     }
   }
 
-  //Image size
-  double _imageSize = 100;
-  get imageSize => _imageSize;
-  set imageSize(double newValue) {
-    _imageSize = newValue;
-    notifyListeners();
-  }
-
-  //Image
-  Image _image;
-  File _imageFile;
-  Widget getImage() {
-    if (_image == null)
-      return Container(width: 0, height: 0);
-    else
-      return _image;
-  }
-
-  setImage() async {
-    _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    _image = Image.file(_imageFile, width: _imageSize);
-    notifyListeners();
-  }
-
-  updateImageSize() {
-    if (_imageFile != null) _image = Image.file(_imageFile, width: _imageSize);
-    notifyListeners();
-  }
-
   //fonts
   static List<String> fonts = <String>[
     'cocogoose',
@@ -199,6 +172,47 @@ class PaintData with ChangeNotifier {
   set font(String newFont) {
     _font = newFont;
     notifyListeners();
+  }
+
+  //Image size
+  double _imageSize = 100;
+  get imageSize => _imageSize;
+  set imageSize(double newValue) {
+    _imageSize = newValue;
+    notifyListeners();
+  }
+
+  //Image
+  MyImage _image;
+  File _imageFile;
+  Widget getImage() {
+    if (_image == null)
+      return Container(width: 0, height: 0);
+    else
+      return _image;
+  }
+
+  setImage() async {
+    _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+    _image = MyImage(image: Image.file(_imageFile, width: _imageSize));
+    notifyListeners();
+  }
+
+  updateImageSize() {
+    if (_imageFile != null)
+      _image = MyImage(image: Image.file(_imageFile, width: _imageSize));
+    notifyListeners();
+  }
+
+  List<PaintImage> _images = <PaintImage>[];
+  get images => _images;
+
+  Future<void> addImage() async {
+    if (_image != null) {
+      ui.Image iimage = await _image.getImage();
+      _images.add(new PaintImage(iimage, Offset(0, 0)));
+      notifyListeners();
+    }
   }
 }
 
@@ -224,4 +238,31 @@ class PaintPath {
   Paint paint;
 
   PaintPath(this.path, this.paint);
+}
+
+class PaintImage {
+  ui.Image image;
+  Offset offset;
+
+  PaintImage(this.image, this.offset);
+}
+
+class MyImage extends StatelessWidget {
+  const MyImage({Key key, this.image}) : super(key: key);
+
+  final Image image;
+  static GlobalKey myKey = new GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      key: myKey,
+      child: image,
+    );
+  }
+
+  Future<ui.Image> getImage() async {
+    RenderRepaintBoundary boundary = myKey.currentContext.findRenderObject();
+    return await boundary.toImage();
+  }
 }

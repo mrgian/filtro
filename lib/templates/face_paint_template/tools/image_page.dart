@@ -87,7 +87,7 @@ class ImagePage extends StatelessWidget {
                       MyButton(
                           text: 'Select image',
                           onTap: () => paintData.setImage()),
-                      MyButton(text: 'Add', onTap: () => paintData.addText()),
+                      MyButton(text: 'Add', onTap: () => paintData.addImage()),
                     ],
                   )
                 ],
