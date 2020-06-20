@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 
-enum Tool { none, draw, text }
+enum Tool { none, draw, text, image }
 
 class PaintData with ChangeNotifier {
   //Points

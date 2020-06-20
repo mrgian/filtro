@@ -12,7 +12,7 @@ class ImagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paintData = Provider.of<PaintData>(context);
-    paintData.currentTool = Tool.text;
+    paintData.currentTool = Tool.image;
     return WillPopScope(
       onWillPop: () => onWillPop(paintData),
       child: SingleChildScrollViewWithScrollbar(
